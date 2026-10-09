@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .container {
     max-width: 900px;
     margin: 40px auto;
@@ -13,6 +14,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
+
 .app-header {
     display: flex;
     align-items: center;
@@ -21,32 +23,39 @@ body {
     padding-bottom: 15px;
     margin-bottom: 25px;
 }
+
 .app-logo {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
 }
+
 h2, h3 {
     color: #2c3e50;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 15px;
 }
+
 th, td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
+
 th {
     background-color: #3498db;
     color: white;
 }
+
 tr:hover {
     background-color: #f9f9f9;
 }
+
 .btn, button {
     background-color: #3498db;
     color: white;
@@ -59,15 +68,19 @@ tr:hover {
     display: inline-block;
     transition: 0.2s;
 }
+
 .btn:hover, button:hover {
     background-color: #2980b9;
 }
+
 .btn-danger {
     background-color: #e74c3c;
 }
+
 .btn-danger:hover {
     background-color: #c0392b;
 }
+
 input, select {
     padding: 10px;
     margin: 8px 0;
@@ -76,10 +89,35 @@ input, select {
     border: 1px solid #ccc;
     border-radius: 6px;
 }
+
 .card-box {
     background: #f8f9fa;
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 20px;
     border-left: 4px solid #3498db;
+}
+
+/* Mobile responsive fix */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 16px;
+        padding: 5px;
+        background-color: #ffffff;
+    }
+    .container {
+        max-width: 100% !important;
+        margin: 5px !important;
+        padding: 15px !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+    table, th, td {
+        font-size: 14px !important;
+        padding: 8px !important;
+    }
+    .btn, button {
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+    }
 }

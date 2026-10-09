@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container" style="border: 2px solid #3498db; padding: 40px;">
+    <div class="container" style="border: 2px solid #3498db; padding: 40px; position: relative;">
         <div style="text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%;">
             <h2>PrantaShiksha Tuition Center</h2>
-            <p><strong>Teacher / Manager:</strong> Ashmita Hazarika</p>
-            <p><strong>Phone:</strong> +91 XXXXXXXXXX | <strong>Email:</strong> prantattb@okaxis</p>
+            <p><strong>Teacher / Manager:</strong> Pranta Gogoi</p>
+            <p><strong>Phone:</strong> 6001060858 | <strong>Email:</strong> prantattb@gmail.com</p>
         </div>
 
         <h3>Official Fee Receipt</h3>
@@ -19,24 +19,23 @@
         <p><strong>Class:</strong> {{ student.student_class }}</p>
         <p><strong>Subject:</strong> {{ student.subject }}</p>
 
-        <table style="margin-top: 20px;">
+        <table style="margin-top: 20px; width: 100%; border-collapse: collapse;">
             <tr>
-                <th>Total Fee</th>
-                <th>Paid Fee</th>
-                <th>Due Balance</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Total Fee</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Paid Fee</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Due Balance</th>
             </tr>
             <tr>
-                <td>₹{{ student.total_fee }}</td>
-                <td>₹{{ student.paid_fee }}</td>
-                <td style="color: #e74c3c; font-weight: bold;">₹{{ due_fee }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">₹{{ student.total_fee }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">₹{{ student.paid_fee }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd; color: #e74c3c; font-weight: bold;">₹{{ due_fee }}</td>
             </tr>
         </table>
 
-        <!-- QR Code Section Fixed -->
+        <!-- QR Code Scanner Section -->
         <div style="text-align: center; margin-top: 30px; background: #fdfdfd; border: 2px dashed #27ae60; padding: 20px; border-radius: 10px;">
             <h3>Scan & Pay Dues Online</h3>
             <p>Use any UPI App (GPay, PhonePe, Paytm)</p>
-            <!-- Sahi file name qr.jpg ya qr.png ensure karein static folder mein -->
             <img src="{{ url_for('static', filename='qr.jpg') }}" alt="UPI QR Code" style="width: 170px; height: 170px; border-radius: 8px; border: 1px solid #ccc; padding: 5px; background: #fff;" onerror="this.onerror=null; this.src='{{ url_for('static', filename='qr.png') }}';">
             <p style="margin-top: 10px; font-size: 16px;"><strong>UPI ID:</strong> prantattb@okaxis</p>
         </div>
@@ -44,6 +43,11 @@
         <div style="text-align: center; margin-top: 30px;">
             <a href="{{ url_for('student_detail', id=student.id) }}" class="btn">← Back to Student Profile</a>
             <button onclick="window.print()" class="btn" style="background-color: #27ae60; margin-left: 10px;">🖨️ Print Receipt</button>
+        </div>
+
+        <!-- Lowest Part: Developed and managed by Ashmita Hazarika in italic & small font -->
+        <div style="text-align: center; margin-top: 40px; font-size: 11px; font-style: italic; color: #7f8c8d;">
+            Developed and managed by Ashmita Hazarika
         </div>
     </div>
 </body>

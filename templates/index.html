@@ -8,7 +8,6 @@
 <body>
     <div class="container">
         <div class="app-header">
-            <!-- Yahan aapka custom logo show hoga -->
             <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="app-logo">
             <div>
                 <h2>PrantaShiksha Tuition Management</h2>
@@ -37,13 +36,14 @@
                     <td>{{ student.student_class }}</td>
                     <td>{{ student.subject }}</td>
                     <td>
-                        <a href="{{ url_for('student_detail', id=student.id) }}" class="btn" style="padding: 5px 10px; font-size: 14px;">View</a>
-                        <a href="{{ url_for('delete_student', id=student.id) }}" class="btn btn-danger" style="padding: 5px 10px; font-size: 14px;" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="{{ url_for('student_detail', id=student.id) }}" class="btn" style="padding: 5px 10px; font-size: 13px;">Manage</a>
+                        <a href="{{ url_for('edit_student', id=student.id) }}" class="btn" style="padding: 5px 10px; font-size: 13px; background-color: #f39c12;">Edit</a>
+                        <a href="{{ url_for('delete_student', id=student.id) }}" class="btn btn-danger" style="padding: 5px 10px; font-size: 13px;" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="5" style="text-align: center; color: #888;">No students added yet. Click above to add!</td>
+                    <td colspan="5" style="text-align: center; color: #888;">No students added yet.</td>
                 </tr>
                 {% endfor %}
             </tbody>

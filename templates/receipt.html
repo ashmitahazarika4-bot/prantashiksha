@@ -2,137 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fee Receipt - PrantaShiksha</title>
-    
-    <!-- Mobile App Manifest & Custom Logo Links -->
-    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo.jpg') }}">
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-        }
-        .receipt-box {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 20px;
-        }
-        .details-table {
-            width: 100%;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border-collapse: collapse;
-        }
-        .details-table td {
-            padding: 8px;
-            border-bottom: 1px solid #eee;
-        }
-        .qr-section {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .qr-section img {
-            width: 150px;
-            height: 150px;
-            border: 1px solid #ddd;
-            padding: 5px;
-            border-radius: 5px;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="container" style="border: 2px solid #3498db; padding: 40px;">
+        <div style="text-align: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px;">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%;">
+            <h2>PrantaShiksha Tuition Center</h2>
+            <p><strong>Teacher / Manager:</strong> Ashmita Hazarika</p>
+            <p><strong>Phone:</strong> +91 XXXXXXXXXX | <strong>Email:</strong> prantattb@okaxis</p>
+        </div>
 
-    <div class="receipt-box">
-        <h2>PrantaShiksha Tuition</h2>
-        <div class="subtitle">Official Fee Receipt</div>
-        <hr>
+        <h3>Official Fee Receipt</h3>
+        <p><strong>Student Name:</strong> {{ student.name }}</p>
+        <p><strong>Class:</strong> {{ student.student_class }}</p>
+        <p><strong>Subject:</strong> {{ student.subject }}</p>
 
-        <table class="details-table">
+        <table style="margin-top: 20px;">
             <tr>
-                <td><strong>Student Name:</strong></td>
-                <td>{{ student.name }}</td>
+                <th>Total Fee</th>
+                <th>Paid Fee</th>
+                <th>Due Balance</th>
             </tr>
             <tr>
-                <td><strong>Class:</strong></td>
-                <td>{{ student.student_class }}</td>
-            </tr>
-            <tr>
-                <td><strong>Subject:</strong></td>
-                <td>{{ student.subject }}</td>
+                <td>₹{{ student.total_fee }}</td>
+                <td>₹{{ student.paid_fee }}</td>
+                <td style="color: #e74c3c; font-weight: bold;">₹{{ due_fee }}</td>
             </tr>
         </table>
 
-        <h3>Fee History & Status:</h3>
-        <table class="details-table" style="border: 1px solid #ddd;">
-            <tr style="background-color: #f8f9fa;">
-                <th style="padding: 8px; border: 1px solid #ddd;">Date</th>
-                <th style="padding: 8px; border: 1px solid #ddd;">Amount</th>
-                <th style="padding: 8px; border: 1px solid #ddd;">Status</th>
-                <th style="padding: 8px; border: 1px solid #ddd;">Remarks</th>
-            </tr>
-            {% for fee in student.fees %}
-            <tr>
-                <td style="padding: 8px; border: 1px solid #ddd;">{{ fee.date_paid }}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">₹{{ fee.amount }}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">{{ fee.status }}</td>
-                <td style="padding: 8px; border: 1px solid #ddd;">{{ fee.remarks }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="4" style="text-align: center; padding: 10px;">No fee transactions recorded yet.</td>
-            </tr>
-            {% endfor %}
-        </table>
-
-        <div class="qr-section">
-            <p>Scan to Pay via QR Code:</p>
-            <img src="{{ url_for('static', filename='qr.jpg') }}" alt="Payment QR Code">
+        <!-- QR Code Section Fixed -->
+        <div style="text-align: center; margin-top: 30px; background: #fdfdfd; border: 2px dashed #27ae60; padding: 20px; border-radius: 10px;">
+            <h3>Scan & Pay Dues Online</h3>
+            <p>Use any UPI App (GPay, PhonePe, Paytm)</p>
+            <!-- Sahi file name qr.jpg ya qr.png ensure karein static folder mein -->
+            <img src="{{ url_for('static', filename='qr.jpg') }}" alt="UPI QR Code" style="width: 170px; height: 170px; border-radius: 8px; border: 1px solid #ccc; padding: 5px; background: #fff;" onerror="this.onerror=null; this.src='{{ url_for('static', filename='qr.png') }}';">
+            <p style="margin-top: 10px; font-size: 16px;"><strong>UPI ID:</strong> prantattb@okaxis</p>
         </div>
 
-        <div style="text-align: center;">
-            <a href="{{ url_for('student_detail', id=student.id) }}" class="btn">Back to Student Profile</a>
-        </div>
-
-        <!-- Footer -->
-        5<div class="footer">
-            Developed & Managed By Ashmita Hazarika
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{{ url_for('student_detail', id=student.id) }}" class="btn">← Back to Student Profile</a>
+            <button onclick="window.print()" class="btn" style="background-color: #27ae60; margin-left: 10px;">🖨️ Print Receipt</button>
         </div>
     </div>
-
 </body>
 </html>

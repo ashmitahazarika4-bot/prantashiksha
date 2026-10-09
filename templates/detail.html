@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Profile - PrantaShiksha</title>
+    <title>Student Management - PrantaShiksha</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h2>Student Profile: {{ student.name }}</h2>
+        <h2>Student: {{ student.name }}</h2>
         <p><strong>Class:</strong> {{ student.student_class }} | <strong>Subject:</strong> {{ student.subject }}</p>
         
         <div class="card-box">
@@ -15,6 +15,7 @@
             <p><strong>Total Fee:</strong> ₹{{ student.total_fee }}</p>
             <p><strong>Paid Fee:</strong> ₹{{ student.paid_fee }}</p>
             <p><strong>Due Fee:</strong> ₹{{ due_fee }}</p>
+            <a href="{{ url_for('receipt', id=student.id) }}" class="btn" style="background-color: #27ae60; margin-top: 10px;">📄 View Fee Receipt & UPI Scanner</a>
         </div>
 
         <div class="card-box">
@@ -60,7 +61,7 @@
                 <option value="Pending">Pending</option>
             </select>
             <label>Remarks:</label>
-            <input type="text" name="remarks" placeholder="e.g., Monthly Tuition Fee">
+            <input type="text" name="remarks" placeholder="Monthly Fee">
             <button type="submit">Add Fee Record</button>
         </form>
 
@@ -72,14 +73,6 @@
                 <p style="color: #777;">No fee records added yet.</p>
             {% endfor %}
         </ul>
-
-        <!-- UPI QR Code Section -->
-        <div style="text-align: center; margin-top: 30px; background: #fff; border: 2px dashed #3498db; padding: 20px; border-radius: 10px;">
-            <h3>Quick Fee Payment Scanner</h3>
-            <p>Scan this QR code using any UPI app (GPay, PhonePe, Paytm) to clear dues.</p>
-            <img src="{{ url_for('static', filename='qr.jpg') }}" alt="UPI QR Code" style="width: 160px; height: 160px; border-radius: 8px; border: 1px solid #ddd; padding: 5px;">
-            <p style="margin-top: 10px; font-size: 16px;"><strong>UPI ID:</strong> prantattb@okaxis</p>
-        </div>
 
         <br>
         <a href="{{ url_for('index') }}" class="btn" style="background-color: #7f8c8d;">← Back to Dashboard</a>

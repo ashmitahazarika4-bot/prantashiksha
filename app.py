@@ -74,6 +74,19 @@ def add_student():
   return render_template('add_student.html')
 
 
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def edit_student(id):
+  student = Student.query.get_or_404(id)
+  if request.method == 'POST':
+    student.name = request.form['name']
+    student.student_class = request.form['student_class']
+    student.subject = request.form['subject']
+    student.total_fee = float(request.form.get('total_fee') or 0)
+    db.session.commit()
+    return redirect(url_for('index'))
+  return render_template('edit_student.html', student=student)
+
+
 @app.route('/student/<int:id>', methods=['GET', 'POST'])
 def student_detail(id):
   student = Student.query.get_or_404(id)
@@ -121,6 +134,13 @@ def student_detail(id):
       absent_count=absent_count,
       due_fee=due_fee,
   )
+
+
+@app.route('/receipt/<int:id>')
+def receipt(id):
+  student = Student.query.get_or_404(id)
+  due_fee = student.total_fee - student.paid_fee
+  return render_template('receipt.html', student=student, due_fee=due_fee)
 
 
 @app.route('/delete/<int:id>')

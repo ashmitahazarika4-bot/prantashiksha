@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ student.name }} - PrantaShiksha Record Sheet</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2, h3 { color: #2c3e50; }
+        .info-box { background: #ecf0f1; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 25px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background: #34495e; color: white; }
+        .form-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        input, select { padding: 8px; flex: 1; border: 1px solid #ccc; border-radius: 4px; }
+        .btn-add { background: #e67e22; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-add:hover { background: #d35400; }
+        .scanner-box { background: #fdfefe; border: 2px dashed #3498db; padding: 20px; border-radius: 8px; text-align: center; margin-top: 25px; }
+        .back { display: inline-block; margin-top: 15px; text-decoration: none; color: #3498db; font-weight: bold; }
+        .footer { text-align: center; font-style: italic; color: #7f8c8d; font-size: 13px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📄 PrantaShiksha - Class Record Sheet</h2>
+        <div class="info-box">
+            <p><strong>Student's Name:</strong> {{ student.name }}</p>
+            <p><strong>Class:</strong> {{ student.student_class }} | <strong>Subject:</strong> {{ student.subject }}</p>
+        </div>
+
+        <h3>📅 Attendance Log</h3>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+            {% for att in student.attendances %}
+            <tr>
+                <td>{{ att.date }}</td>
+                <td style="color: {% if att.status == 'Present' %}green{% else %}red{% endif %}; font-weight: bold;">{{ att.status }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="2">No attendance marked yet.</td></tr>
+            {% endfor %}
+        </table>
+
+        <form action="/student/{{ student.id }}/add_attendance" method="POST" class="form-row">
+            <input type="text" name="date" placeholder="Date" required>
+            <select name="status">
+                <option value="Present">Present</option>
+                <option value="Absent">Absent</option>
+            </select>
+            <button type="submit" class="btn-add">Add Attendance</button>
+        </form>
+
+        <h3 style="margin-top: 30px;">💰 Fee & Payment Ledger</h3>
+        <table>
+            <tr>
+                <th>Date Paid</th>
+                <th>Amount (Rs.)</th>
+                <th>Status</th>
+                <th>Remarks</th>
+            </tr>
+            {% for fee in student.fees %}
+            <tr>
+                <td>{{ fee.date_paid }}</td>
+                <td>₹{{ fee.amount }}</td>
+                <td style="color: green; font-weight: bold;">{{ fee.status }}</td>
+                <td>{{ fee.remarks }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4">No fee records added yet.</td></tr>
+            {% endfor %}
+        </table>
+
+        <form action="/student/{{ student.id }}/add_fee" method="POST" class="form-row">
+            <input type="text" name="date_paid" placeholder="Date" required>
+            <input type="number" name="amount" placeholder="Amount" required>
+            <select name="status">
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+            </select>
+            <input type="text" name="remarks" placeholder="Remarks">
+            <button type="submit" class="btn-add">Add Fee</button>
+        </form>
+
+        <!-- Scanner / QR Code Section for Fee Payment -->
+        <div class="scanner-box">
+            <h3>📱 Quick Fee Payment Scanner</h3>
+            <p style="color: #555; font-size: 14px;">Scan this QR code using any UPI app (GPay, PhonePe, Paytm) to pay fees online.</p>
+            <img src="{{ url_for('static', filename='qr.jpg') }}" alt="UPI QR Code" style="width: 150px; height: 150px; border-radius: 6px;">
+            <p style="font-size: 13px; color: #e67e22; font-weight: bold; margin-top: 10px;">UPI ID: ashmitahazarika4okhdfc</p>
+        </div>
+
+        <a href="/" class="back">← Back to Dashboard</a>
+        <p class="footer">Development by Ashmita Hazarika</p>
+    </div>
+</body>
+</html>

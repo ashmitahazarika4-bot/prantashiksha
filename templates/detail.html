@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Details - PrantaShiksha</title>
+    <title>Student Profile - PrantaShiksha</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -10,17 +10,17 @@
         <h2>Student Profile: {{ student.name }}</h2>
         <p><strong>Class:</strong> {{ student.student_class }} | <strong>Subject:</strong> {{ student.subject }}</p>
         
-        <div class="fee-box">
+        <div class="card-box">
             <h3>Fee Summary</h3>
-            <p>Total Fee: ₹{{ student.total_fee }}</p>
-            <p>Paid Fee: ₹{{ student.paid_fee }}</p>
-            <p>Due Fee: ₹{{ due_fee }}</p>
+            <p><strong>Total Fee:</strong> ₹{{ student.total_fee }}</p>
+            <p><strong>Paid Fee:</strong> ₹{{ student.paid_fee }}</p>
+            <p><strong>Due Fee:</strong> ₹{{ due_fee }}</p>
         </div>
 
-        <div class="attendance-summary">
+        <div class="card-box">
             <h3>Attendance Summary</h3>
-            <p>Total Classes: {{ total_classes }}</p>
-            <p>Present: {{ present_count }} | Absent: {{ absent_count }}</p>
+            <p><strong>Total Classes:</strong> {{ total_classes }}</p>
+            <p><strong>Present:</strong> {{ present_count }} | <strong>Absent:</strong> {{ absent_count }}</p>
         </div>
 
         <hr>
@@ -34,7 +34,7 @@
                 <option value="Present">Present</option>
                 <option value="Absent">Absent</option>
             </select>
-            <button type="submit">Add Attendance</button>
+            <button type="submit">Save Attendance</button>
         </form>
 
         <h3>Attendance History</h3>
@@ -42,7 +42,7 @@
             {% for att in student.attendance_records %}
                 <li>{{ att.date }} - <strong>{{ att.status }}</strong></li>
             {% else %}
-                <p>No attendance marked yet.</p>
+                <p style="color: #777;">No attendance marked yet.</p>
             {% endfor %}
         </ul>
 
@@ -60,8 +60,8 @@
                 <option value="Pending">Pending</option>
             </select>
             <label>Remarks:</label>
-            <input type="text" name="remarks" placeholder="Monthly fee">
-            <button type="submit">Add Fee</button>
+            <input type="text" name="remarks" placeholder="e.g., Monthly Tuition Fee">
+            <button type="submit">Add Fee Record</button>
         </form>
 
         <h3>Fee Ledger History</h3>
@@ -69,19 +69,20 @@
             {% for fee in student.fee_records %}
                 <li>{{ fee.date }} - ₹{{ fee.amount }} ({{ fee.status }}) - {{ fee.remarks }}</li>
             {% else %}
-                <p>No fee records added yet.</p>
+                <p style="color: #777;">No fee records added yet.</p>
             {% endfor %}
         </ul>
 
-        <div class="qr-container" style="text-align: center; margin-top: 20px; border: 1px dashed #ccc; padding: 15px;">
+        <!-- UPI QR Code Section -->
+        <div style="text-align: center; margin-top: 30px; background: #fff; border: 2px dashed #3498db; padding: 20px; border-radius: 10px;">
             <h3>Quick Fee Payment Scanner</h3>
-            <p>Scan this QR code using any UPI app (GPay, PhonePe, Paytm) to pay fees online.</p>
-            <img src="{{ url_for('static', filename='qr.jpg') }}" alt="UPI QR Code" style="width: 180px; height: 180px; border: 1px solid #ccc; padding: 5px; background: #fff;">
-            <p><strong>UPI ID:</strong> prantattb@okaxis</p>
+            <p>Scan this QR code using any UPI app (GPay, PhonePe, Paytm) to clear dues.</p>
+            <img src="{{ url_for('static', filename='qr.jpg') }}" alt="UPI QR Code" style="width: 160px; height: 160px; border-radius: 8px; border: 1px solid #ddd; padding: 5px;">
+            <p style="margin-top: 10px; font-size: 16px;"><strong>UPI ID:</strong> prantattb@okaxis</p>
         </div>
 
         <br>
-        <a href="{{ url_for('index') }}">Back to Dashboard</a>
+        <a href="{{ url_for('index') }}" class="btn" style="background-color: #7f8c8d;">← Back to Dashboard</a>
     </div>
 </body>
 </html>

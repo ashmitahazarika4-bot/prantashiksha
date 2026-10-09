@@ -25,7 +25,7 @@ class Student(db.Model):
 class Attendance(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   date = db.Column(db.String(50), nullable=False)
-  status = db.Column(db.String(10), nullable=False)  # Present / Absent
+  status = db.Column(db.String(10), nullable=False)
   student_id = db.Column(
       db.Integer, db.ForeignKey('student.id'), nullable=False
   )
@@ -35,7 +35,7 @@ class FeeRecord(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   date = db.Column(db.String(50), nullable=False)
   amount = db.Column(db.Float, nullable=False)
-  status = db.Column(db.String(20), nullable=False)  # Paid / Pending
+  status = db.Column(db.String(20), nullable=False)
   remarks = db.Column(db.String(200))
   student_id = db.Column(
       db.Integer, db.ForeignKey('student.id'), nullable=False
@@ -121,19 +121,6 @@ def student_detail(id):
       absent_count=absent_count,
       due_fee=due_fee,
   )
-
-
-@app.route('/edit/<int:id>', methods=['GET', 'POST'])
-def edit_student(id):
-  student = Student.query.get_or_404(id)
-  if request.method == 'POST':
-    student.name = request.form['name']
-    student.student_class = request.form['student_class']
-    student.subject = request.form['subject']
-    student.total_fee = float(request.form.get('total_fee') or 0)
-    db.session.commit()
-    return redirect(url_for('index'))
-  return render_template('edit_student.html', student=student)
 
 
 @app.route('/delete/<int:id>')
